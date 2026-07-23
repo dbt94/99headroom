@@ -12,10 +12,6 @@ on:
   pull_request:
     branches: [main]
 
-concurrency:
-  group: merge-conflicts-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 permissions:
   contents: read
 
@@ -24,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v6
       - name: Reject unresolved merge-conflict markers
         run: |
           if git grep -nI -E '^(<{7}|>{7}|\|{7})( |$)' -- .; then

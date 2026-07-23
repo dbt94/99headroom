@@ -3,13 +3,8 @@ name: Wrap E2E
 on:
   pull_request:
     branches: [main]
-    # Scoped to what the `headroom wrap` flow actually exercises (mirrors
-    # wrap-native-e2e), not all of headroom/** — a pure-Python logic change
-    # elsewhere shouldn't spin up a docker wrap E2E.
     paths:
-      - 'headroom/cli/**'
-      - 'headroom/providers/**'
-      - 'headroom/rtk/**'
+      - 'headroom/**'
       - 'crates/**'
       - 'docker/**'
       - 'Dockerfile'
@@ -37,7 +32,7 @@ jobs:
     timeout-minutes: 45
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v6
 
       - name: Build wrap e2e image
         run: docker build -f e2e/wrap/Dockerfile -t headroom-wrap-e2e .
